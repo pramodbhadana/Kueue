@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Kueue</string>
+    <string name="com_spotify_sdk_redirect_host">yourcustomprotocol</string>
+    <string name="com_spotify_sdk_redirect_scheme">callback</string>
+    <string name="token" />
+</resources>
