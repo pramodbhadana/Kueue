@@ -11,6 +11,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "SPOTIFY_CLIENT_ID", getClientID("spotify_client_id")
     }
 
     buildTypes {
@@ -31,4 +32,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
 
+}
+
+def getClientID(String property){
+    Properties properties = new Properties()
+    properties.load(new FileInputStream("app/src/main/assets/privateKeys.txt"))
+    return "\"" + properties.getProperty(property) +"\""
 }
