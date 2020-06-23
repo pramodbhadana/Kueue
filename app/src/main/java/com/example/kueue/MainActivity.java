@@ -26,7 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String CLIENT_ID = "3a52b822f15e4c1597af86ce9b8539c1";
+    private static final String CLIENT_ID = BuildConfig.SPOTIFY_CLIENT_ID;
     private static String AUTH_TOKEN = null;
     private static String urlPrefix = "https://api.spotify.com/v1/me/player/queue?uri=";
 
