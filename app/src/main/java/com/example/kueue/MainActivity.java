@@ -2,7 +2,6 @@ package com.example.kueue;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kueue.Utils.GeneralUtil;
+import com.example.kueue.Utils.SharedPreferenceUtil;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
@@ -36,14 +37,15 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPref ;
 
     private TextView textViewStatus;
+    private GeneralUtil generalUtil;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textViewStatus = findViewById(R.id.edittext_status);
-        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-
+        sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getApplicationContext());
+        generalUtil = GeneralUtil.getInstance(getApplicationContext());
         getAndPopulateToken();
 
         if(AUTH_TOKEN == null) {
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         if (Intent.ACTION_VIEW.equals(action)) {
             String URL =  intent.getDataString();
             if(URL != null) {
-                String URI = convertToURI(URL);
+                String URI = generalUtil.convertToURI(URL);
                 new NetworkCallTask().execute(URI);
             }
             }
@@ -72,24 +74,6 @@ public class MainActivity extends AppCompatActivity {
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
     }
 
-    private String convertToURI(String url) {
-        int index = -1;
-        String URI =  null;
-        if(-1 != url.indexOf("/track/")) {
-            URI = "spotify"+url.substring(url.indexOf("/track/"),url.indexOf("/track/")+22+7);
-        }
-        else if(-1 != url.indexOf("/artist/")) {
-            URI = "spotify"+url.substring(url.indexOf("/artist/"),url.indexOf("/artist/")+22+8);
-        }
-        else if(-1 != url.indexOf("/album/")) {
-            URI = "spotify"+url.substring(url.indexOf("/album/"),url.indexOf("/album/")+22+7);
-        }
-        else if(-1 != url.indexOf("/playlist/")) {
-            URI = "spotify"+url.substring(url.indexOf("/user/"),url.indexOf("/track/")+10+6)+
-            ":"+url.substring(url.indexOf("/playlist/"),url.indexOf("/playlist/")+22+10);
-        }
-        return URI.replace('/',':');
-    }
 
     String handleCurlRequest(String urlToProcess) {
             StringBuffer response = new StringBuffer();
@@ -167,13 +151,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getAndPopulateToken() {
-        AUTH_TOKEN = sharedPref.getString(getString(R.string.token),null);
+        AUTH_TOKEN = sharedPreferenceUtil.getClientID();
     }
 
     private void writeSharedPreference(String token) {
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.token), token);
-        editor.commit();
+        sharedPreferenceUtil.setClientID(token);
     }
 
     public void handleButtonClick(View view) {
