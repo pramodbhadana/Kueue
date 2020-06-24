@@ -10,7 +10,7 @@ public class SharedPreferenceUtil {
     private static SharedPreferenceUtil instance;
     private SharedPreferences SP;
     private SharedPreferences.Editor editor;
-    private String spotify_client_id ="SpotifyClientID";
+    private String spotify_auth_token ="SpotifyAuthToken";
 
     private SharedPreferenceUtil(Context context)
     {
@@ -31,14 +31,14 @@ public class SharedPreferenceUtil {
         return instance;
     }
 
-    public String getClientID()
+    public String getAuthToken()
     {
-        return SP.getString(spotify_client_id,"");
+        return SP.getString(spotify_auth_token,"");
     }
 
-    public void setClientID(String value)
+    public void setAuthToken(String value)
     {
-        editor.putString(spotify_client_id,value);
+        editor.putString(spotify_auth_token,value);
         editor.commit();
     }
 

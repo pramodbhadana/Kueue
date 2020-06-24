@@ -1,11 +1,12 @@
 package com.example.kueue.Utils;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
 
 public class GeneralUtil {
 
     private static GeneralUtil instance;
+    public static final int REQUEST_LOGIN = 7589;
+
 
     public static GeneralUtil getInstance(Context context)
     {

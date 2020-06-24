@@ -9,9 +9,6 @@ import android.widget.Toast;
 
 import com.example.kueue.Utils.GeneralUtil;
 import com.example.kueue.Utils.SharedPreferenceUtil;
-import com.spotify.sdk.android.authentication.AuthenticationClient;
-import com.spotify.sdk.android.authentication.AuthenticationRequest;
-import com.spotify.sdk.android.authentication.AuthenticationResponse;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -25,17 +22,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String CLIENT_ID = BuildConfig.SPOTIFY_CLIENT_ID;
+
     private static String AUTH_TOKEN = null;
     private static String urlPrefix = "https://api.spotify.com/v1/me/player/queue?uri=";
-
+    
     private static final int REQUEST_CODE = 1337;
-    private static final String REDIRECT_URI = "yourcustomprotocol://callback";
 
-    private SharedPreferences sharedPref ;
-
-    private TextView textViewStatus;
+    private SharedPreferenceUtil sharedPreferenceUtil;
     private GeneralUtil generalUtil;
+
+    private TextView loginStatusTextview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +42,12 @@ public class MainActivity extends AppCompatActivity {
         generalUtil = GeneralUtil.getInstance(getApplicationContext());
         getAndPopulateToken();
 
-        if(AUTH_TOKEN == null) {
-            handleSpotifyAccountConnect();
+
+        if(AUTH_TOKEN.isEmpty() || AUTH_TOKEN == null) {
+           // start login activity
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivityForResult(intent,generalUtil.REQUEST_LOGIN);
         }
 
         final Intent intent = getIntent();
@@ -62,15 +62,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-    private void handleSpotifyAccountConnect() {
-        AuthenticationRequest.Builder builder =
-                new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
 
-        builder.setScopes(new String[]{"user-modify-playback-state"});
-        AuthenticationRequest request = builder.build();
-
-        AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
-    }
 
 
     String handleCurlRequest(String urlToProcess) {

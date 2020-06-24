@@ -3,4 +3,10 @@
     <string name="com_spotify_sdk_redirect_host">yourcustomprotocol</string>
     <string name="com_spotify_sdk_redirect_scheme">callback</string>
     <string name="token" />
+    <string name="app_logo">App Logo</string>
+    <string name="kueue_description">Kueue lets you add any track to your already playing spotify queue.</string>
+    <string name="login_with_spotify">Login with Spotify</string>
+    <string name="login_description">Don\'t worry, Kueue won\'t be able to access your private music library.</string>
+    <string name="login_error">An error occured while logging into Spotify.  Please try later.</string>
+    <string name="login_error_flow_cancelled">Login operation was cancelled. Please try again.</string>
 </resources>
