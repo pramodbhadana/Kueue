@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.kueue.MainActivity">
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,30 +20,36 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:host="open.spotify.com" android:scheme="http" android:pathPrefix="/"/>
-                <data android:host="open.spotify.com" android:scheme="https" android:pathPrefix="/"/>
-                <data android:host="m.youtube.com" android:scheme="https" android:pathPrefix="/"/>
-                <data android:host="m.youtube.com" android:scheme="http" android:pathPrefix="/"/>
+
+                <data
+                    android:host="open.spotify.com"
+                    android:pathPrefix="/"
+                    android:scheme="http" />
+                <data
+                    android:host="open.spotify.com"
+                    android:pathPrefix="/"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.spotify.sdk.android.authentication.LoginActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:exported="true"
             android:name="com.spotify.sdk.android.authentication.AuthCallbackActivity"
+            android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
-
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="@string/com_spotify_sdk_redirect_scheme"
-                    android:host="@string/com_spotify_sdk_redirect_host"/>
+                    android:host="@string/com_spotify_sdk_redirect_host"
+                    android:scheme="@string/com_spotify_sdk_redirect_scheme" />
             </intent-filter>
         </activity>
     </application>

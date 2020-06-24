@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.example.addtospotifyqueue"
+        applicationId "com.example.kueue"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1

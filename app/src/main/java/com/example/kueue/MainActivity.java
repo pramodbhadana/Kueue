@@ -1,11 +1,9 @@
 package com.example.kueue;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -114,56 +112,35 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            textViewStatus.setText(s);
         }
     }
+    
+    private void getAndPopulateToken() {
+        AUTH_TOKEN = sharedPreferenceUtil.getAuthToken();
+    }
 
+    private void writeSharedPreference(String token) {
+            sharedPreferenceUtil.setAuthToken(token);
+    }
+
+//    public void handleButtonClick(View view) {
+//        if(view.getId() == R.id.button) {
+//            startActivity(new Intent(
+//                    android.provider.Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS));
+//        }
+//    }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
         // Check if result comes from the correct activity
-        if (requestCode == REQUEST_CODE) {
-            AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, intent);
-
-            switch (response.getType()) {
-                // Response was successful and contains auth token
-                case TOKEN:
-                    // Handle successful response
-                    //Toast.makeText(this,"success",Toast.LENGTH_LONG);
-                    AUTH_TOKEN = response.getAccessToken();
-                    writeSharedPreference(AUTH_TOKEN);
-                    break;
-
-                // Auth flow returned an error
-                case ERROR:
-                    // Handle error response
-                    Toast.makeText(this,"error",Toast.LENGTH_LONG);
-                    break;
-
-                // Most likely auth flow was cancelled
-                default:
-                    Toast.makeText(this,"error2",Toast.LENGTH_LONG);
-
-                    // Handle other cases
+        if (requestCode == GeneralUtil.REQUEST_LOGIN) {
+            if(resultCode == Activity.RESULT_OK) {
+                //Login successful
+                loginStatusTextview = findViewById(R.id.login_status_textview);
+                loginStatusTextview.setText("Spotify Login is successful");
             }
         }
     }
-
-    private void getAndPopulateToken() {
-        AUTH_TOKEN = sharedPreferenceUtil.getClientID();
-    }
-
-    private void writeSharedPreference(String token) {
-        sharedPreferenceUtil.setClientID(token);
-    }
-
-    public void handleButtonClick(View view) {
-        if(view.getId() == R.id.button) {
-            startActivity(new Intent(
-                    android.provider.Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS));
-        }
-    }
-
-
+    
 }
