@@ -49,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivityForResult(intent,generalUtil.REQUEST_LOGIN);
         }
+        else {
+            startLoggedInActivity();
+            finish();
+        }
 
         final Intent intent = getIntent();
         final String action = intent.getAction();
@@ -63,7 +67,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
+    private void startLoggedInActivity() {
+        Intent intent = new Intent(this, LoggedInActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 
     String handleCurlRequest(String urlToProcess) {
             StringBuffer response = new StringBuffer();
@@ -131,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
                 //Login successful
                 loginStatusTextview = findViewById(R.id.login_status_textview);
                 loginStatusTextview.setText("Spotify Login is successful");
+                startLoggedInActivity();
+                finish();
             }
         }
     }

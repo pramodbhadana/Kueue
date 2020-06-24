@@ -6,7 +6,9 @@
     <string name="app_logo">App Logo</string>
     <string name="kueue_description">Kueue lets you add any track to your already playing spotify queue.</string>
     <string name="login_with_spotify">Login with Spotify</string>
+    <string name="login_as_another_user">Login as another user ?</string>
     <string name="login_description">Don\'t worry, Kueue won\'t be able to access your private music library.</string>
     <string name="login_error">An error occured while logging into Spotify.  Please try later.</string>
     <string name="login_error_flow_cancelled">Login operation was cancelled. Please try again.</string>
+    <string name="logged_in_user">Logged in as</string>
 </resources>
