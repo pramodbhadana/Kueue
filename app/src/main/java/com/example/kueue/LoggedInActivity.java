@@ -37,8 +37,18 @@ public class LoggedInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in);
 
+        sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getApplicationContext());
+        generalUtil = GeneralUtil.getInstance(getApplicationContext());
+
         username_textView = findViewById(R.id.username_textView);
         logoutButton = findViewById(R.id.button_logout);
+
+        String userName = sharedPreferenceUtil.getUserName();
+        if(userName != null && !userName.isEmpty())
+            username_textView.setText(userName);
+        else {
+            new NetworkCallTask().execute();
+        }
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,9 +57,6 @@ public class LoggedInActivity extends AppCompatActivity {
             }
         });
 
-        sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getApplicationContext());
-        generalUtil = GeneralUtil.getInstance(getApplicationContext());
-        new NetworkCallTask().execute();
     }
 
     private void showLogoutUI() {
@@ -102,7 +109,9 @@ public class LoggedInActivity extends AppCompatActivity {
             super.onPostExecute(s);
             try {
                 JSONObject jsonObject = new JSONObject(s);
-                username_textView.setText(jsonObject.getString("display_name"));
+                String userName = jsonObject.getString("display_name");
+                sharedPreferenceUtil.setUserName(userName);
+                username_textView.setText(userName);
             }
             catch (JSONException e) {
                 e.printStackTrace();
