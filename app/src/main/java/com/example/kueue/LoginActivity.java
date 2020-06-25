@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.kueue.Utils.GeneralUtil;
 import com.example.kueue.Utils.SharedPreferenceUtil;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -22,15 +23,16 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginToSpotifyButton;
 
     private static final int REQUEST_CODE = 1337;
-    private static final String REDIRECT_URI = "yourcustomprotocol://callback";
 
     private SharedPreferenceUtil sharedPreferenceUtil;
+    private GeneralUtil generalUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
         sharedPreferenceUtil = SharedPreferenceUtil.getInstance(getApplicationContext());
+        generalUtil = GeneralUtil.getInstance(getApplicationContext());
         loginToSpotifyButton = findViewById(R.id.button_logon);
         loginToSpotifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void handleSpotifyAccountConnect() {
         AuthenticationRequest.Builder builder =
-                new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
+                new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, generalUtil.REDIRECT_URI);
 
         builder.setScopes(new String[]{"user-modify-playback-state"});
         AuthenticationRequest request = builder.build();

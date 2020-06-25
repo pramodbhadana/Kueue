@@ -7,6 +7,7 @@ public class GeneralUtil {
     private static GeneralUtil instance;
     public static final int REQUEST_LOGIN = 7589;
 
+    public static final String REDIRECT_URI = "yourcustomprotocol://callback";
 
     public static GeneralUtil getInstance(Context context)
     {
