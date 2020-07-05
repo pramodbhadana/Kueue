@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddTrackSuccessFragment"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp">
+
+    <Button
+        android:id="@+id/button_logon"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/black_button"
+        android:shadowColor="#050505"
+        android:text="@string/toggle_play_pause"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".72" />
+
+    <TextView
+        android:id="@+id/textView_by"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/by"
+        android:textAlignment="center"
+        android:textSize="21sp"
+        app:layout_constraintTop_toBottomOf="@+id/textView_track" />
+
+    <TextView
+        android:id="@+id/textView_artist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dummy_artist"
+        android:textAlignment="center"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/textView_by" />
+
+    <TextView
+        android:id="@+id/textView_added_to_queue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/added_to_queue"
+        android:textAlignment="center"
+        android:textSize="21sp"
+        app:layout_constraintTop_toBottomOf="@+id/textView_artist" />
+
+    <TextView
+        android:id="@+id/textView_track"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dummy_track"
+        android:textAlignment="center"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".30" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

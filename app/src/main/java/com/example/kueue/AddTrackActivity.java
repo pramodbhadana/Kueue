@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
+import kaaes.spotify.webapi.android.models.ArtistSimple;
 import kaaes.spotify.webapi.android.models.Track;
 
 import android.content.Intent;
@@ -21,16 +22,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.List;
 
 public class AddTrackActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private AddTrackFragment addTrackFragment;
     private AddTrackFailureFragment addTrackFailureFragment;
+    private AddTrackSuccessFragment addTrackSuccessFragment;
     private GeneralUtil generalUtil;
     private SharedPreferenceUtil sharedPreferenceUtil;
     private static String AddTrackFragmentTag = "AddTrackFragment";
     private static String AddTrackFailureFragmentTag = "AddTrackFailureFragment";
+    private static String AddTrackSuccessFragmentTag = "AddTrackSuccessFragment";
 
     private static Track addedTrack = null;
 
@@ -109,16 +113,40 @@ public class AddTrackActivity extends AppCompatActivity {
             super.onPostExecute(responseCode);
             if(responseCode != HttpURLConnection.HTTP_NO_CONTENT) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.remove(fragmentManager.findFragmentByTag(AddTrackFragmentTag));
-                fragmentTransaction.commit();
-                fragmentTransaction.add(R.id.parentConstraintLayout, addTrackFailureFragment);
+
+                Fragment addTrackFragment = fragmentManager.findFragmentByTag(AddTrackFailureFragmentTag);
+                if(addTrackFragment != null && addTrackFragment.isAdded())
+                    fragmentTransaction.remove(addTrackFragment);
+
                 fragmentTransaction.commit();
             }
             else {
                 //add artist and album information.
-                //start activity.
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                Fragment addTrackFragment = fragmentManager.findFragmentByTag(AddTrackFragmentTag);
+                if(addTrackFragment != null && addTrackFragment.isAdded())
+                    fragmentTransaction.remove(addTrackFragment);
+
+                Fragment failureFragment = fragmentManager.findFragmentByTag(AddTrackFailureFragmentTag);
+                if(failureFragment != null && failureFragment.isAdded())
+                    fragmentTransaction.remove(failureFragment);
+
+                addTrackSuccessFragment = AddTrackSuccessFragment.newInstance(addedTrack.name,convertArtistsToString(addedTrack.artists));
+                fragmentTransaction.add(R.id.parentConstraintLayout, addTrackSuccessFragment,AddTrackSuccessFragmentTag);
+                fragmentTransaction.commit();
             }
         }
+    }
+
+    private String convertArtistsToString(List<ArtistSimple> artists) {
+        String artistList = new String();
+        artistList = artists.get(0).name;
+        for(int i= 1;i<artists.size()-1;i++) {
+            artistList = ", " + artists.get(i).name;
+        }
+        artistList = artistList + " and " + artists.get(artists.size()-1).name;
+        return artistList;
     }
 
 }

@@ -16,4 +16,11 @@
     <string name="album_not_support_msg">Currently, adding an whole album is not supported.</string>
     <string name="playlist_not_support_msg">Currently, adding an whole album is not supported.</string>
     <string name="error_msg">Something bad happened while processing the last request.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dummy_track">dummy track name</string>
+    <string name="by">by</string>
+    <string name="dummy_artist">dummy artist name</string>
+    <string name="added_to_queue">was added to \n the queue.</string>
+    <string name="toggle_play_pause">Toggle Play/Pause</string>
 </resources>
