@@ -50,7 +50,7 @@ public class SharedPreferenceUtil {
 
     public void setUserName(String value)
     {
-        editor.putString(spotify_auth_token,value);
+        editor.putString(spotify_user_name,value);
         editor.commit();
     }
 

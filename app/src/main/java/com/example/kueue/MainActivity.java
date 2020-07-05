@@ -24,9 +24,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private static String AUTH_TOKEN = null;
-    private static String urlPrefix = "https://api.spotify.com/v1/me/player/queue?uri=";
-    
-    private static final int REQUEST_CODE = 1337;
 
     private SharedPreferenceUtil sharedPreferenceUtil;
     private GeneralUtil generalUtil;
@@ -53,18 +50,7 @@ public class MainActivity extends AppCompatActivity {
             startLoggedInActivity();
             finish();
         }
-
-        final Intent intent = getIntent();
-        final String action = intent.getAction();
-
-        if (Intent.ACTION_VIEW.equals(action)) {
-            String URL =  intent.getDataString();
-            if(URL != null) {
-                String URI = generalUtil.convertToURI(URL);
-                new NetworkCallTask().execute(URI);
-            }
-            }
-        }
+    }
 
 
     private void startLoggedInActivity() {
@@ -73,47 +59,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    String handleCurlRequest(String urlToProcess) {
-            StringBuffer response = new StringBuffer();
-        try {
-            URL url = new URL(urlPrefix+ URLEncoder.encode(urlToProcess,"UTF-8"));
-            //URL url = new URL("https://api.spotify.com/v1/me/player/queue?uri=spotify%3Atrack%3A4iV5W9uYEdYUVa79Axb7Rh");
-
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            conn.setRequestProperty("Authorization", "Bearer " + AUTH_TOKEN);
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setRequestMethod("POST");
-
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String output;
-
-            while ((output = in.readLine()) != null) {
-                response.append(output);
-            }
-
-            in.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return response.toString();
-
-    }
-    class NetworkCallTask extends AsyncTask<String,Void,String> {
-        @Override
-        protected String doInBackground(String... strings) {
-            return handleCurlRequest(strings[0]);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
-    }
     
     private void getAndPopulateToken() {
         AUTH_TOKEN = sharedPreferenceUtil.getAuthToken();

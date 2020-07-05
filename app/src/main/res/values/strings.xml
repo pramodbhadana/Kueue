@@ -11,4 +11,9 @@
     <string name="login_error">An error occured while logging into Spotify.  Please try later.</string>
     <string name="login_error_flow_cancelled">Login operation was cancelled. Please try again.</string>
     <string name="logged_in_user">Logged in as</string>
+    <string name="adding_a_song">Adding song to your spotify \n queue ...</string>
+    <string name="sorry_msg">We are Sorry.</string>
+    <string name="album_not_support_msg">Currently, adding an whole album is not supported.</string>
+    <string name="playlist_not_support_msg">Currently, adding an whole album is not supported.</string>
+    <string name="error_msg">Something bad happened while processing the last request.</string>
 </resources>

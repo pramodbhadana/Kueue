@@ -8,7 +8,7 @@ public class GeneralUtil {
     public static final int REQUEST_LOGIN = 7589;
 
     public static final String REDIRECT_URI = "yourcustomprotocol://callback";
-
+    public static final String urlPrefixForTrack = "https://api.spotify.com/v1/me/player/queue?uri=";
     public static GeneralUtil getInstance(Context context)
     {
         if(instance == null) {
